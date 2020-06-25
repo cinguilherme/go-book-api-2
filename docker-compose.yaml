@@ -2,11 +2,11 @@ version: "3.7"
 
 services:
 
-  book-api-go-fiber:
-    image: fiber-api:latest
-    build: .
-    ports: 
-      - 3000:3000
+  # book-api-go-fiber:
+  #   image: fiber-api:latest
+  #   build: .
+  #   ports: 
+  #     - 3000:3000
 
   book_db_go:
       image: postgres:11-alpine
