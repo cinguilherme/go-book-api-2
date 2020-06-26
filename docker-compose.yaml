@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.8"
 
 services:
 
@@ -29,6 +29,20 @@ services:
     links: 
       - "book_db_go:database"
     command: sh -c "sleep 1 && /dist/main"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          cpus: '0.001'
+          memory: 80M
+        reservations:
+          cpus: '0.0001'
+          memory: 20M
+          ## NOT SURE if this is even working... CTOP is not displaying 20Mb for each container
 
   loadbalancer:
     image: dockercloud/haproxy
