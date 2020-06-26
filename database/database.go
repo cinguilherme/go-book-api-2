@@ -12,12 +12,15 @@ var (
 )
 
 func GetModel() *gorm.DB {
-	db, err := gorm.Open("postgres", "host=localhost port=5432 user=bookuser dbname=books_db password=bookdbpass sslmode=disable")
+	//local := "host=localhost port=5432 user=bookuser dbname=books_db password=bookdbpass sslmode=disable"
+	docker := "host=book_db_go port=5432 user=bookuser dbname=books_db password=bookdbpass sslmode=disable"
+
+	db, err := gorm.Open("postgres", docker)
 
 	// defer db.Close()
 	if err != nil {
 		fmt.Println(err)
-		panic("error connecting to db")
+		panic("error connecting to db " + err.Error())
 	}
 
 	fmt.Println("db connected")

@@ -5,6 +5,7 @@ import (
 
 	"github.com/cinguilherme/go-api-fiber/book"
 	"github.com/cinguilherme/go-api-fiber/database"
+	"github.com/cinguilherme/go-api-fiber/video"
 	"github.com/gofiber/fiber"
 )
 
@@ -23,6 +24,7 @@ func initDatabase() {
 	database.DBConn = database.GetModel()
 	// defer database.DBConn.Close()
 	database.DBConn.AutoMigrate(&book.Book{})
+	database.DBConn.AutoMigrate(&video.Video{})
 	fmt.Println("DB migrated")
 
 }

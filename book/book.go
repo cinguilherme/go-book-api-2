@@ -13,7 +13,6 @@ type Book struct {
 	Title  string `json:"title"`
 	Author string `json:"author"`
 	Year   string `json:"year"`
-	ID     int    `json:"id"`
 }
 
 func AllBooks(c *fiber.Ctx) {
@@ -37,8 +36,9 @@ func CreateBook(c *fiber.Ctx) {
 	var book Book
 	book.Title = "LOrds"
 	book.Author = "Tolkien"
+	book.Year = "2020"
 
-	db.Create(&book).Commit()
+	db.Create(&book)
 	c.JSON(book)
 }
 

@@ -2,23 +2,29 @@ version: "3.7"
 
 services:
 
-  # book-api-go-fiber:
-  #   image: fiber-api:latest
-  #   build: .
-  #   ports: 
-  #     - 3000:3000
-
   book_db_go:
-      image: postgres:11-alpine
-      ports:
-        - 5432:5432
-      volumes:
-        - database-data-go:/var/lib/postgresql/data/ # persist data even if container shuts down
-      environment:
-        POSTGRES_USER: "bookuser"
-        POSTGRES_PASSWORD: "bookdbpass"
-        POSTGRES_DB: "books_db"
+    image: postgres:11-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - database-data-go:/var/lib/postgresql/data/ # persist data even if container shuts down
+    environment:
+      POSTGRES_USER: "bookuser"
+      POSTGRES_PASSWORD: "bookdbpass"
+      POSTGRES_DB: "books_db"
+    
 
+  book-api-go-fiber:
+    image: fiber-api:latest
+    build: .
+    ports: 
+      - 3000:3000
+    depends_on: 
+      - book_db_go
+    links: 
+      - "book_db_go:database"
+    command: sh -c "sleep 1 && /dist/main"
+    
 
 volumes: 
     database-data-go:
