@@ -13,6 +13,11 @@ services:
       POSTGRES_PASSWORD: "bookdbpass"
       POSTGRES_DB: "books_db"
     
+  redis_books_db_go:
+    image: redis
+    command: redis-server --requirepass Redis2019!
+    ports:
+      - "6379:6379"
 
   book-api-go-fiber:
     image: fiber-api:latest
