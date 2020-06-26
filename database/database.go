@@ -12,10 +12,10 @@ var (
 )
 
 func GetModel() *gorm.DB {
-	//local := "host=localhost port=5432 user=bookuser dbname=books_db password=bookdbpass sslmode=disable"
-	docker := "host=book_db_go port=5432 user=bookuser dbname=books_db password=bookdbpass sslmode=disable"
+	connectionStr := "host=localhost port=5432 user=bookuser dbname=books_db password=bookdbpass sslmode=disable"
+	// connectionStr := "host=book_db_go port=5432 user=bookuser dbname=books_db password=bookdbpass sslmode=disable"
 
-	db, err := gorm.Open("postgres", docker)
+	db, err := gorm.Open("postgres", connectionStr)
 
 	// defer db.Close()
 	if err != nil {

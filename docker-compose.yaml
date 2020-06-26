@@ -19,39 +19,39 @@ services:
     ports:
       - "6379:6379"
 
-  book-api-go-fiber:
-    image: fiber-api:latest
-    build: .
-    ports: 
-      - 3000-3008:3000
-    depends_on: 
-      - book_db_go
-    links: 
-      - "book_db_go:database"
-    command: sh -c "sleep 1 && /dist/main"
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
-      resources:
-        limits:
-          cpus: '0.001'
-          memory: 80M
-        reservations:
-          cpus: '0.0001'
-          memory: 20M
-          ## NOT SURE if this is even working... CTOP is not displaying 20Mb for each container
+  # book-api-go-fiber:
+  #   image: fiber-api:latest
+  #   build: .
+  #   ports: 
+  #     - 3000-3008:3000
+  #   depends_on: 
+  #     - book_db_go
+  #   links: 
+  #     - "book_db_go:database"
+  #   command: sh -c "sleep 1 && /dist/main"
+  #   deploy:
+  #     restart_policy:
+  #       condition: on-failure
+  #       delay: 5s
+  #       max_attempts: 3
+  #       window: 120s
+  #     resources:
+  #       limits:
+  #         cpus: '0.001'
+  #         memory: 80M
+  #       reservations:
+  #         cpus: '0.0001'
+  #         memory: 20M
+  #         ## NOT SURE if this is even working... CTOP is not displaying 20Mb for each container
 
-  loadbalancer:
-    image: dockercloud/haproxy
-    links:
-      - book-api-go-fiber
-    ports:
-      - "80:80"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+  # loadbalancer:
+  #   image: dockercloud/haproxy
+  #   links:
+  #     - book-api-go-fiber
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
     
 
 volumes: 

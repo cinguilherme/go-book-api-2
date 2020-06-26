@@ -1,16 +1,23 @@
 package video
 
 import (
-	"encoding/json"
-
+	"github.com/gofiber/fiber"
 	"github.com/jinzhu/gorm"
 )
 
 type Video struct {
 	gorm.Model
-	Name     string          `json:"name"`
-	Source   string          `json:"source"`
-	Length   float32         `json:"length"`
-	Free     bool            `json:"free"`
-	Metadata json.RawMessage `json:"metadata"`
+	Data string `sql:"type:JSONB NOT NULL DEFAULT '{}'::JSONB"`
+}
+
+func AllVideos(c *fiber.Ctx) {
+	c.Send("all videos endpoint")
+}
+
+func SingleVideos(c *fiber.Ctx) {
+	c.Send("single videos endpoint")
+}
+
+func NewVideos(c *fiber.Ctx) {
+	c.Send("create videos endpoint")
 }
