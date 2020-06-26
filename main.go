@@ -1,25 +1,36 @@
 package main
 
 import (
+	"fmt"
+
+	"github.com/cinguilherme/go-api-fiber/book"
 	"github.com/cinguilherme/go-api-fiber/database"
 	"github.com/gofiber/fiber"
 )
 
 func helloWorld(c *fiber.Ctx) {
-	database.GetModel()
 	c.Send("hello world")
 }
 
 func setupBookRoutes(app *fiber.App) {
-	app.Get("/api/v1/book", database.AllBooks)
-	app.Post("/api/v1/book", database.CreateBook)
-	app.Get("/api/v1/book/:id", database.GetBook)
-	app.Delete("/api/v1/book/:id", database.DeleteBook)
+	app.Get("/api/v1/book", book.AllBooks)
+	app.Post("/api/v1/book", book.CreateBook)
+	app.Get("/api/v1/book/:id", book.GetBook)
+	app.Delete("/api/v1/book/:id", book.DeleteBook)
+}
+
+func initDatabase() {
+	database.DBConn = database.GetModel()
+	// defer database.DBConn.Close()
+	database.DBConn.AutoMigrate(&book.Book{})
+	fmt.Println("DB migrated")
+
 }
 
 func main() {
 	app := fiber.New()
-	database.PerformMigrations()
+	initDatabase()
+
 	app.Get("/", helloWorld)
 
 	setupBookRoutes(app)
