@@ -18,7 +18,7 @@ services:
     image: fiber-api:latest
     build: .
     ports: 
-      - 3000:3000
+      - 3000-3005:3000
     depends_on: 
       - book_db_go
     links: 
